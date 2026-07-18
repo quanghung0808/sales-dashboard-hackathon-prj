@@ -1,0 +1,10 @@
+node_modules
+.next
+.git
+.gitignore
+*.md
+.env*
+.eslintrc*
+tsconfig.json
+postcss.config.mjs
+next.config.ts
