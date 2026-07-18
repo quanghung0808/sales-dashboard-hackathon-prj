@@ -10,12 +10,11 @@ import {
   Building2,
   Users,
   UserCheck,
-  TrendingUp,
   MessageSquare,
   ShoppingBag,
   Target,
   Sparkles,
-  Settings,
+  User,
   ChevronLeft,
   ChevronRight,
   Bot,
@@ -34,6 +33,8 @@ interface SidebarProps {
 export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
   const pathname = usePathname();
   const { role, user } = useAuthStore();
+
+  const companyDisplayName = user?.companyName || 'Jemmia Diamond';
 
   const navItems = [
     // Super Admin Routes
@@ -96,7 +97,7 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
       roles: ['sales'],
     },
     {
-      label: 'Hội Thoại & AI Score',
+      label: 'Hội Thoại',
       href: '/sales/conversations',
       icon: MessageSquare,
       roles: ['sales'],
@@ -114,7 +115,7 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
       roles: ['sales'],
     },
 
-    // API Integration & Multi-Tenant Features
+    // API Integration & Multi-Tenant Features (Admin / Super Admin only)
     {
       label: 'API Access Keys',
       href: '/settings/api-keys',
@@ -125,7 +126,7 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
       label: 'Tài Liệu REST API',
       href: '/settings/api-docs',
       icon: BookOpen,
-      roles: ['super_admin', 'company_admin', 'sales'],
+      roles: ['super_admin', 'company_admin'],
     },
     {
       label: 'Webhooks Event',
@@ -140,11 +141,11 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
       roles: ['super_admin', 'company_admin'],
     },
 
-    // Shared Settings
+    // Shared Profile
     {
-      label: 'Cài Đặt',
+      label: 'Hồ sơ',
       href: '/settings',
-      icon: Settings,
+      icon: User,
       roles: ['super_admin', 'company_admin', 'sales'],
     },
   ];
@@ -155,22 +156,22 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
     <aside
       className={cn(
         'sticky top-0 z-40 flex h-screen flex-col border-r border-slate-200/80 bg-white/95 backdrop-blur-xl transition-all duration-300 dark:border-slate-800/80 dark:bg-slate-900/95',
-        isCollapsed ? 'w-20' : 'w-64'
+        isCollapsed ? 'w-16' : 'w-64'
       )}
     >
       {/* Brand Header */}
-      <div className="flex h-16 items-center justify-between px-4 border-b border-slate-200/80 dark:border-slate-800/80">
-        <div className="flex items-center gap-3 overflow-hidden">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-rose-500 shadow-md shadow-indigo-500/20 text-white font-black text-xl">
-            AI
+      <div className="flex h-16 items-center justify-between px-3 border-b border-slate-200/80 dark:border-slate-800/80">
+        <div className="flex items-center gap-2.5 overflow-hidden">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-rose-500 shadow-md shadow-indigo-500/20 text-white font-black text-base">
+            💎
           </div>
           {!isCollapsed && (
             <div className="flex flex-col truncate">
-              <span className="text-base font-bold bg-gradient-to-r from-blue-600 via-indigo-500 to-rose-500 bg-clip-text text-transparent">
-                Sales CRM AI
+              <span className="text-sm font-extrabold text-slate-900 dark:text-white truncate">
+                {companyDisplayName}
               </span>
               <span className="text-[10px] font-medium uppercase tracking-wider text-slate-400">
-                {role === 'super_admin' ? 'Super Admin' : role === 'company_admin' ? user?.companyName || 'Company Admin' : 'Sales Workspace'}
+                {role === 'super_admin' ? 'Super Admin' : role === 'company_admin' ? 'Company Admin' : 'Sales Workspace'}
               </span>
             </div>
           )}
@@ -178,9 +179,9 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
 
         <button
           onClick={onToggleCollapse}
-          className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-200 transition-colors"
+          className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-200 transition-colors shrink-0"
         >
-          {isCollapsed ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
+          {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
         </button>
       </div>
 
@@ -208,29 +209,6 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
             </Link>
           );
         })}
-      </div>
-
-      {/* Footer User Info */}
-      <div className="p-3 border-t border-slate-200/80 dark:border-slate-800/80">
-        <div
-          className={cn(
-            'flex items-center gap-3 rounded-xl bg-slate-50 p-2.5 dark:bg-slate-800/60',
-            isCollapsed && 'justify-center p-2'
-          )}
-        >
-          {/* eslint-disable-next-html-element-suppression */}
-          <img
-            src={user?.avatar || 'https://api.dicebear.com/7.x/avataaars/svg?seed=Default'}
-            alt="Avatar"
-            className="h-8 w-8 rounded-full border border-slate-300 dark:border-slate-700 shrink-0"
-          />
-          {!isCollapsed && (
-            <div className="flex flex-col truncate text-xs">
-              <span className="font-semibold text-slate-900 dark:text-slate-100 truncate">{user?.name}</span>
-              <span className="text-slate-400 truncate capitalize">{role.replace('_', ' ')}</span>
-            </div>
-          )}
-        </div>
       </div>
     </aside>
   );

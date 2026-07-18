@@ -120,6 +120,7 @@ export function generateMockSales(): SalesRep[] {
     kpiTarget: 450000000,
     kpiAchieved: 78,
     commission: 17500000,
+    commissionRate: 4,
     activeLeadsCount: 14,
     createdAt: '2023-02-15',
   });
@@ -137,6 +138,7 @@ export function generateMockSales(): SalesRep[] {
     const revenue = Math.floor((kpiTarget * kpiAchieved) / 100);
     const commRate = kpiAchieved >= 120 ? 0.08 : kpiAchieved >= 100 ? 0.05 : kpiAchieved >= 80 ? 0.03 : 0;
     const commission = Math.floor(revenue * commRate);
+    const commissionRatePercent = Math.round(commRate * 100) || 4;
 
     salesList.push({
       id: `sales-${i}`,
@@ -152,6 +154,7 @@ export function generateMockSales(): SalesRep[] {
       kpiTarget,
       kpiAchieved,
       commission,
+      commissionRate: commissionRatePercent,
       activeLeadsCount: 5 + (i % 15),
       createdAt: `2023-0${1 + (i % 9)}-${10 + (i % 18)}`,
     });
@@ -186,7 +189,7 @@ export function generateMockCustomers(salesList: SalesRep[]): Customer[] {
       favoriteProduct: PRODUCTS[i % PRODUCTS.length],
       assignedSalesId: assignedSales.id,
       assignedSalesName: assignedSales.name,
-      createdAt: `2024-0${1 + (i % 9)}-${10 + (i % 18)}`,
+      createdAt: `2026-0${1 + (i % 6)}-${10 + (i % 18)}`,
       tier,
     });
   }
@@ -204,13 +207,40 @@ export function generateMockOrders(customers: Customer[], salesList: SalesRep[])
     'Refunded'
   ];
 
+  // Daily revenue per active day will total around 30M to 500M VND
   for (let i = 1; i <= 800; i++) {
     const customer = customers[(i - 1) % customers.length];
     const sales = salesList.find(s => s.id === customer.assignedSalesId) || salesList[0];
     const product = PRODUCTS[i % PRODUCTS.length];
-    const amount = Math.floor(10000000 + Math.random() * 180000000);
+    
+    // Each individual order is between 25,000,000đ and 250,000,000đ
+    const amount = Math.floor(25000000 + Math.random() * 225000000);
     const status = STATUS_WEIGHTS[i % STATUS_WEIGHTS.length];
     const commission = Math.floor(amount * 0.04);
+
+    let dateStr = '2026-07-18';
+    if (i <= 3) {
+      // Today (2026-07-18): 2-3 orders totaling 180M - 350M VND (within 30M - 500M daily range!)
+      dateStr = '2026-07-18';
+    } else if (i <= 25) {
+      // This Week (2026-07-13 to 2026-07-17): 3-4 orders per day totaling 70M - 420M per day
+      const day = 13 + (i % 5);
+      dateStr = `2026-07-${day < 10 ? '0' + day : day}`;
+    } else if (i <= 150) {
+      // This Month (2026-07-01 to 2026-07-12)
+      const day = 1 + (i % 12);
+      dateStr = `2026-07-${day < 10 ? '0' + day : day}`;
+    } else if (i <= 450) {
+      // Q2/Q3 2026
+      const month = 4 + (i % 3);
+      const day = 10 + (i % 18);
+      dateStr = `2026-0${month}-${day}`;
+    } else {
+      // Months T1 to T3 2026
+      const month = 1 + (i % 3);
+      const day = 10 + (i % 18);
+      dateStr = `2026-0${month}-${day}`;
+    }
 
     orders.push({
       id: `ORD-${2000 + i}`,
@@ -223,7 +253,7 @@ export function generateMockOrders(customers: Customer[], salesList: SalesRep[])
       amount,
       commission,
       status,
-      createdAt: `2026-0${1 + (i % 6)}-${10 + (i % 20)}`,
+      createdAt: dateStr,
     });
   }
   return orders;

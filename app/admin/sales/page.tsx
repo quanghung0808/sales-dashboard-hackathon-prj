@@ -24,6 +24,7 @@ export default function SalesManagementPage() {
   const [phone, setPhone] = useState('');
   const [department, setDepartment] = useState('VIP Consultation');
   const [kpiTarget, setKpiTarget] = useState(450000000);
+  const [commissionRate, setCommissionRate] = useState(4);
 
   const { data: sales = [], isLoading } = useQuery({
     queryKey: ['salesRepList'],
@@ -39,6 +40,7 @@ export default function SalesManagementPage() {
           phone,
           department,
           kpiTarget,
+          commissionRate,
         });
       }
       return SalesService.createSales({
@@ -51,6 +53,7 @@ export default function SalesManagementPage() {
         joinDate: new Date().toISOString().split('T')[0],
         avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`,
         kpiTarget,
+        commissionRate,
         createdAt: new Date().toISOString().split('T')[0],
       });
     },
@@ -74,6 +77,7 @@ export default function SalesManagementPage() {
     setPhone(s.phone);
     setDepartment(s.department);
     setKpiTarget(s.kpiTarget);
+    setCommissionRate(s.commissionRate || 4);
     setIsModalOpen(true);
   };
 
@@ -84,6 +88,7 @@ export default function SalesManagementPage() {
     setPhone('');
     setDepartment('VIP Consultation');
     setKpiTarget(450000000);
+    setCommissionRate(4);
     setIsModalOpen(true);
   };
 
@@ -126,13 +131,16 @@ export default function SalesManagementPage() {
       },
     },
     {
+      accessorKey: 'commissionRate',
+      header: '% Hoa Hồng',
+      cell: ({ row }) => (
+        <span className="font-extrabold text-amber-500">{row.original.commissionRate || 4}%</span>
+      ),
+    },
+    {
       accessorKey: 'commission',
       header: 'Hoa Hồng Trả',
       cell: ({ row }) => <span className="font-semibold">{formatVND(row.original.commission)}</span>,
-    },
-    {
-      accessorKey: 'joinDate',
-      header: 'Ngày Vào Làm',
     },
     {
       id: 'actions',
@@ -166,7 +174,7 @@ export default function SalesManagementPage() {
             <UserCheck className="h-6 w-6 text-blue-500" /> Quản Lý Đội Ngũ Sales
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            Quản lý thông tin 80 nhân viên bán hàng (Vietnamese names & mock statistics)
+            Quản lý tài khoản nhân viên bán hàng & Cấu hình tỷ lệ % hoa hồng được cấp
           </p>
         </div>
         <Button variant="gradient" onClick={handleOpenCreate} className="flex items-center gap-1.5">
@@ -204,7 +212,7 @@ export default function SalesManagementPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-3 gap-3">
             <div className="space-y-1.5">
               <label className="text-xs font-semibold">Phòng Ban</label>
               <Select value={department} onChange={(e) => setDepartment(e.target.value)}>
@@ -216,8 +224,12 @@ export default function SalesManagementPage() {
               </Select>
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold">Chỉ Tiêu KPI Tháng (VNĐ)</label>
+              <label className="text-xs font-semibold">Chỉ Tiêu KPI (VNĐ)</label>
               <Input type="number" value={kpiTarget} onChange={(e) => setKpiTarget(Number(e.target.value))} required />
+            </div>
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold">% Hoa Hồng Cấp</label>
+              <Input type="number" value={commissionRate} onChange={(e) => setCommissionRate(Number(e.target.value))} required min={0} max={100} />
             </div>
           </div>
 

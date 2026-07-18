@@ -6,7 +6,7 @@ import { Dialog } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { MOCK_TIMELINE_EVENTS } from '@/services/mock/mockData';
-import { formatVND } from '@/lib/utils';
+import { formatFullVND } from '@/lib/utils';
 import { Phone, Mail, MapPin, Calendar, Sparkles, ShoppingBag, Clock, CheckCircle2 } from 'lucide-react';
 
 interface Customer360ModalProps {
@@ -20,8 +20,6 @@ export function Customer360Modal({ customer, isOpen, onClose }: Customer360Modal
     <Dialog
       isOpen={isOpen}
       onClose={onClose}
-      title={`Hồ Sơ Khách Hàng 360°: ${customer.name}`}
-      description={`Phân hạng ${customer.tier} • Tổng tích lũy ${formatVND(customer.totalSpent)}`}
       className="max-w-5xl"
     >
       <div className="space-y-6">
@@ -45,7 +43,7 @@ export function Customer360Modal({ customer, isOpen, onClose }: Customer360Modal
           </div>
           <div className="text-right">
             <span className="text-xs text-slate-400 block">Tổng Chi Tiêu</span>
-            <span className="text-xl font-black text-emerald-500">{formatVND(customer.totalSpent)}</span>
+            <span className="text-xl font-black text-emerald-500">{formatFullVND(customer.totalSpent)}</span>
           </div>
         </div>
 

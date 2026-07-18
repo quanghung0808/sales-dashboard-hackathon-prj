@@ -40,7 +40,7 @@ export function DashboardLayoutShell({ children }: { children: React.ReactNode }
 
       {/* Main Content Workspace */}
       <div className="flex flex-1 flex-col overflow-x-hidden min-w-0">
-        <Header onTriggerDailySummary={() => setIsDailyReportOpen(true)} />
+        <Header />
         <main className="flex-1 p-6 md:p-8 space-y-8 max-w-7xl w-full mx-auto">
           {children}
         </main>

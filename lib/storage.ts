@@ -53,7 +53,10 @@ export function initLocalStorageMockData() {
     const customers = generateMockCustomers(sales);
     localStorage.setItem(KEYS.CUSTOMERS, JSON.stringify(customers));
   }
-  if (!localStorage.getItem(KEYS.ORDERS)) {
+
+  // Force re-seed orders if existing storage doesn't have realistic daily range
+  const ordersStr = localStorage.getItem(KEYS.ORDERS);
+  if (!ordersStr || !ordersStr.includes('2026-07-18')) {
     const salesStr = localStorage.getItem(KEYS.SALES);
     const sales = salesStr ? JSON.parse(salesStr) : generateMockSales();
     const custStr = localStorage.getItem(KEYS.CUSTOMERS);
@@ -61,6 +64,7 @@ export function initLocalStorageMockData() {
     const orders = generateMockOrders(customers, sales);
     localStorage.setItem(KEYS.ORDERS, JSON.stringify(orders));
   }
+
   if (!localStorage.getItem(KEYS.CONVERSATIONS)) {
     const salesStr = localStorage.getItem(KEYS.SALES);
     const sales = salesStr ? JSON.parse(salesStr) : generateMockSales();
@@ -101,7 +105,7 @@ export function getItem<T>(key: string, fallback: T): T {
   if (typeof window === 'undefined') return fallback;
   try {
     let item = localStorage.getItem(key);
-    if (!item && key.startsWith('crm_mock_')) {
+    if ((!item || (key === KEYS.ORDERS && !item.includes('2026-07-18'))) && key.startsWith('crm_mock_')) {
       initLocalStorageMockData();
       item = localStorage.getItem(key);
     }

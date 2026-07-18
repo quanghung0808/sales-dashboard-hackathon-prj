@@ -7,12 +7,25 @@ export function cn(...inputs: ClassValue[]) {
 
 export function formatVND(amount: number): string {
   if (amount >= 1000000000) {
-    return (amount / 1000000000).toFixed(2) + ' tỷ';
+    const val = amount / 1000000000;
+    const formatted = val.toLocaleString('vi-VN', { maximumFractionDigits: 3 });
+    return `${formatted} tỷ`;
   }
   if (amount >= 1000000) {
-    return (amount / 1000000).toFixed(0) + ' tr';
+    const val = amount / 1000000;
+    const formatted = val.toLocaleString('vi-VN', { maximumFractionDigits: 1 });
+    return `${formatted} tr`;
   }
   return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+}
+
+export function formatMillions(millions: number): string {
+  if (millions >= 1000) {
+    const bill = millions / 1000;
+    const formatted = bill.toLocaleString('vi-VN', { maximumFractionDigits: 3 });
+    return `${formatted} tỷ`;
+  }
+  return `${millions} triệu`;
 }
 
 export function formatFullVND(amount: number): string {

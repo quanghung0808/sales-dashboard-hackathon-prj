@@ -12,7 +12,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog } from '@/components/ui/dialog';
 import { Users, Eye, Sparkles, ShoppingBag, MapPin, Phone, Mail, Calendar, CheckCircle2, Clock } from 'lucide-react';
-import { formatVND } from '@/lib/utils';
+import { formatFullVND } from '@/lib/utils';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 
 export default function CustomerManagementPage() {
@@ -68,28 +68,24 @@ export default function CustomerManagementPage() {
     },
     {
       accessorKey: 'totalSpent',
-      header: 'Tổng Chi Tiêu',
-      cell: ({ row }) => <span className="font-bold text-emerald-500">{formatVND(row.original.totalSpent)}</span>,
-    },
-    {
-      accessorKey: 'assignedSalesName',
-      header: 'Sale Phụ Trách',
-    },
-    {
-      accessorKey: 'createdAt',
-      header: 'Ngày Tạo Lead',
+      header: () => <div className="text-right">Tổng Chi Tiêu</div>,
+      cell: ({ row }) => (
+        <div className="text-right font-bold text-emerald-600 dark:text-emerald-400">
+          {formatFullVND(row.original.totalSpent)}
+        </div>
+      ),
     },
     {
       id: 'actions',
-      header: 'Chi Tiết 360°',
+      header: 'Chi Tiết',
       cell: ({ row }) => (
         <Button
           variant="outline"
           size="sm"
           onClick={() => setSelectedCust(row.original)}
-          className="h-8 text-xs flex items-center gap-1"
+          className="h-8 text-xs flex items-center gap-1 font-bold"
         >
-          <Eye className="h-3.5 w-3.5" /> Hồ Sơ 360°
+          <Eye className="h-3.5 w-3.5" /> Chi Tiết
         </Button>
       ),
     },
@@ -97,26 +93,20 @@ export default function CustomerManagementPage() {
 
   return (
     <div className="space-y-6 animate-in fade-in duration-200">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-            <Users className="h-6 w-6 text-purple-500" /> Quản Lý Khách Hàng (Customer 360°)
-          </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            500 khách hàng mock data với lịch sử mua hàng, AI Summary & Hành trình trải nghiệm
-          </p>
-        </div>
+      {/* Page Title (No Subtitle) */}
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+          <Users className="h-6 w-6 text-purple-500" /> Khách hàng 360
+        </h1>
       </div>
 
       <GenericDataTable columns={columns} data={customers} isLoading={isLoading} searchPlaceholder="Tìm tên khách hàng, thành phố, SĐT, sản phẩm thích..." />
 
-      {/* Customer 360° Modal */}
+      {/* Customer 360 Dialog (No Title Header / Subtitle) */}
       {selectedCust && (
         <Dialog
           isOpen={!!selectedCust}
           onClose={() => setSelectedCust(null)}
-          title={`Hồ Sơ Khách Hàng 360°: ${selectedCust.name}`}
-          description={`Phân hạng ${selectedCust.tier} • Tổng tích lũy ${formatVND(selectedCust.totalSpent)}`}
           className="max-w-5xl"
         >
           <div className="space-y-6">
@@ -140,7 +130,7 @@ export default function CustomerManagementPage() {
               </div>
               <div className="text-right">
                 <span className="text-xs text-slate-400 block">Tổng Chi Tiêu</span>
-                <span className="text-xl font-black text-emerald-500">{formatVND(selectedCust.totalSpent)}</span>
+                <span className="text-xl font-black text-emerald-500">{formatFullVND(selectedCust.totalSpent)}</span>
               </div>
             </div>
 
@@ -183,7 +173,7 @@ export default function CustomerManagementPage() {
                             <div className="font-bold text-slate-900 dark:text-white">{ord.product}</div>
                             <div className="text-[10px] text-slate-400">{ord.id} • {ord.createdAt}</div>
                           </div>
-                          <span className="font-bold text-emerald-500">{formatVND(ord.amount)}</span>
+                          <span className="font-bold text-emerald-500">{formatFullVND(ord.amount)}</span>
                         </div>
                       ))
                     )}

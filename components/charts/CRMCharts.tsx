@@ -15,19 +15,30 @@ import {
   Cell,
   CartesianGrid,
 } from 'recharts';
+import { formatMillions } from '@/lib/utils';
 
-interface ChartProps {
-  height?: number;
+export type ChartPeriod = 'today' | 'week' | 'month' | 'quarter' | 'year';
+
+export interface RevenuePoint {
+  label: string;
+  revenue: number;
+  target?: number;
 }
 
-const MONTHLY_REVENUE_DATA = [
-  { month: 'T1', revenue: 280, target: 300 },
-  { month: 'T2', revenue: 320, target: 300 },
-  { month: 'T3', revenue: 410, target: 350 },
-  { month: 'T4', revenue: 380, target: 350 },
-  { month: 'T5', revenue: 450, target: 400 },
-  { month: 'T6', revenue: 510, target: 400 },
-  { month: 'T7', revenue: 485, target: 450 },
+interface RevenueTrendChartProps {
+  height?: number;
+  period?: ChartPeriod;
+  data?: RevenuePoint[];
+}
+
+const DEFAULT_MONTHLY_REVENUE_DATA: RevenuePoint[] = [
+  { label: 'T1', revenue: 280, target: 300 },
+  { label: 'T2', revenue: 320, target: 300 },
+  { label: 'T3', revenue: 410, target: 350 },
+  { label: 'T4', revenue: 380, target: 350 },
+  { label: 'T5', revenue: 450, target: 400 },
+  { label: 'T6', revenue: 510, target: 400 },
+  { label: 'T7', revenue: 485, target: 450 },
 ];
 
 const ORDER_STATUS_DATA = [
@@ -54,11 +65,13 @@ const CONVERSATION_SCORE_DATA = [
   { range: '< 60 (Rủi ro)', count: 160, fill: '#ef4444' },
 ];
 
-export function RevenueTrendChart({ height = 280 }: ChartProps) {
+export function RevenueTrendChart({ height = 280, data }: RevenueTrendChartProps) {
+  const chartData = data && data.length > 0 ? data : DEFAULT_MONTHLY_REVENUE_DATA;
+
   return (
     <div className="w-full" style={{ height }}>
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={MONTHLY_REVENUE_DATA} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+        <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
           <defs>
             <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.4} />
@@ -66,11 +79,16 @@ export function RevenueTrendChart({ height = 280 }: ChartProps) {
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#334155" opacity={0.2} />
-          <XAxis dataKey="month" tickLine={false} stroke="#94a3b8" fontSize={12} />
-          <YAxis tickLine={false} stroke="#94a3b8" fontSize={12} tickFormatter={(v) => `${v}tr`} />
+          <XAxis dataKey="label" tickLine={false} stroke="#94a3b8" fontSize={12} />
+          <YAxis
+            tickLine={false}
+            stroke="#94a3b8"
+            fontSize={12}
+            tickFormatter={(v) => (v >= 1000 ? `${(v / 1000).toLocaleString('vi-VN', { maximumFractionDigits: 3 })} tỷ` : `${v}tr`)}
+          />
           <Tooltip
             contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '12px', color: '#fff' }}
-            formatter={(value: any) => [`${value} Triệu VNĐ`, 'Doanh Thu']}
+            formatter={(value: any) => [formatMillions(Number(value)), 'Doanh Thu']}
           />
           <Area type="monotone" dataKey="revenue" stroke="#3b82f6" strokeWidth={3} fillOpacity={1} fill="url(#colorRevenue)" />
         </AreaChart>
@@ -79,7 +97,7 @@ export function RevenueTrendChart({ height = 280 }: ChartProps) {
   );
 }
 
-export function OrdersDonutChart({ height = 240 }: ChartProps) {
+export function OrdersDonutChart({ height = 240 }: { height?: number }) {
   return (
     <div className="w-full flex items-center justify-center" style={{ height }}>
       <ResponsiveContainer width="100%" height="100%">
@@ -136,7 +154,7 @@ export function KPIProgressChart() {
   );
 }
 
-export function OrdersStatusChart({ height = 260 }: ChartProps) {
+export function OrdersStatusChart({ height = 260 }: { height?: number }) {
   return (
     <div className="w-full" style={{ height }}>
       <ResponsiveContainer width="100%" height="100%">
@@ -158,7 +176,7 @@ export function OrdersStatusChart({ height = 260 }: ChartProps) {
   );
 }
 
-export function SalesDistributionChart({ height = 240 }: ChartProps) {
+export function SalesDistributionChart({ height = 240 }: { height?: number }) {
   return (
     <div className="w-full flex items-center justify-center" style={{ height }}>
       <ResponsiveContainer width="100%" height="100%">
@@ -186,7 +204,7 @@ export function SalesDistributionChart({ height = 240 }: ChartProps) {
   );
 }
 
-export function ConversationScoreChart({ height = 260 }: ChartProps) {
+export function ConversationScoreChart({ height = 260 }: { height?: number }) {
   return (
     <div className="w-full" style={{ height }}>
       <ResponsiveContainer width="100%" height="100%">

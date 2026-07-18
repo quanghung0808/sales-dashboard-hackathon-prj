@@ -54,6 +54,7 @@ export interface SalesRep extends BaseEntity {
   kpiTarget: number;
   kpiAchieved: number;
   commission: number;
+  commissionRate?: number;
   activeLeadsCount: number;
 }
 
