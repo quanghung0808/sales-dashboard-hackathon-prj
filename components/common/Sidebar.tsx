@@ -70,7 +70,7 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
 
     // Company Admin Routes
     {
-      label: 'Sales',
+      label: 'Quản Lý Sales',
       href: '/admin/sales',
       icon: UserCheck,
       roles: ['company_admin'],
@@ -84,7 +84,7 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
 
     // Sales Routes
     {
-      label: 'Sales Assistant',
+      label: 'Trợ Lý Sales',
       href: '/sales/dashboard',
       icon: Sparkles,
       roles: ['sales'],
@@ -110,7 +110,7 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
 
     // API Integration & Multi-Tenant Features
     {
-      label: 'API Access Keys',
+      label: 'API Keys',
       href: '/settings/api-keys',
       icon: Key,
       roles: ['company_admin'],

@@ -46,8 +46,8 @@ export function DailyAISummaryModal({ isOpen, onClose }: DailyAISummaryModalProp
     <Dialog
       isOpen={isOpen}
       onClose={onClose}
-      title="📊 Báo Cáo AI Sales Brief (18:00)"
-      description="Tổng hợp tự động hiệu suất tư vấn và doanh số trong ngày bởi AI Assistant"
+      title="📊 Báo Cáo AI Cuối Ngày"
+      description="Tổng hợp tự động hiệu suất tư vấn và doanh số trong ngày"
       className="max-w-2xl"
     >
       {loading ? (

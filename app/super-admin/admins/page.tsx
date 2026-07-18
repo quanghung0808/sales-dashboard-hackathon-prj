@@ -62,7 +62,7 @@ export default function SuperAdminAdminsPage() {
   const columns: ColumnDef<CompanyAdmin>[] = [
     {
       accessorKey: 'name',
-      header: 'Admin',
+      header: 'Tên Admin',
       cell: ({ row }) => (
         <div className="flex items-center gap-3">
           {/* eslint-disable-next-html-element-suppression */}
@@ -94,10 +94,10 @@ export default function SuperAdminAdminsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-            <Users className="h-6 w-6 text-indigo-500" /> Quản Lý Company Admins
+            <Users className="h-6 w-6 text-indigo-500" /> Quản Lý Admin
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            Phân quyền tài khoản Quản trị viên cấp Công ty (10 admins mock data)
+            Phân quyền tài khoản Quản trị viên cấp Công ty
           </p>
         </div>
         <Button variant="gradient" onClick={() => setIsModalOpen(true)} className="flex items-center gap-1.5">

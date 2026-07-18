@@ -88,7 +88,7 @@ export function ChatSimulatorDrawer({ conversation, isOpen, onClose }: ChatSimul
           <Card className="border-l-4 border-l-indigo-500">
             <CardHeader className="pb-2">
               <CardTitle className="text-xs font-bold text-indigo-400 flex items-center gap-1.5">
-                <Sparkles className="h-4 w-4" /> Tóm Tắt AI Summary
+                <Sparkles className="h-4 w-4" /> Tóm Tắt AI
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2 text-xs text-slate-300">

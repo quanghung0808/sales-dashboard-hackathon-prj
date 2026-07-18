@@ -31,7 +31,7 @@ export function Customer360Modal({ customer, isOpen, onClose }: Customer360Modal
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white">{customer.name}</h3>
-                <Badge variant="danger">{customer.tier} Member</Badge>
+                <Badge variant="danger">{customer.tier}</Badge>
               </div>
               <div className="text-xs text-slate-400 flex flex-wrap items-center gap-3 mt-1">
                 <span className="flex items-center gap-1"><Phone className="h-3.5 w-3.5" /> {customer.phone}</span>
@@ -53,7 +53,7 @@ export function Customer360Modal({ customer, isOpen, onClose }: Customer360Modal
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm flex items-center gap-1.5">
-                  <Sparkles className="h-4 w-4 text-amber-500" /> AI Customer Insight
+                  <Sparkles className="h-4 w-4 text-amber-500" /> Đánh Giá Khách Hàng
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2 text-xs text-slate-300">
@@ -87,7 +87,7 @@ export function Customer360Modal({ customer, isOpen, onClose }: Customer360Modal
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm flex items-center gap-1.5">
-                  <Clock className="h-4 w-4 text-indigo-500" /> Hành Trình Trải Nghiệm Khách Hàng (Customer Timeline)
+                  <Clock className="h-4 w-4 text-indigo-500" /> Hành Trình Khách Hàng
                 </CardTitle>
               </CardHeader>
               <CardContent>

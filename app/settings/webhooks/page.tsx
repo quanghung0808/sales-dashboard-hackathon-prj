@@ -71,7 +71,7 @@ export default function WebhooksPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-            <Radio className="h-6 w-6 text-purple-500" /> Quản Lý Webhook Events
+            <Radio className="h-6 w-6 text-purple-500" /> Quản Lý Webhook
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
             Đăng ký Endpoint nhận thông báo tự động (Push Events) khi có sự kiện Đơn hàng, Khách hàng hoặc Báo cáo AI
@@ -98,9 +98,9 @@ export default function WebhooksPage() {
             <table className="w-full text-left text-sm">
               <thead className="bg-slate-50 dark:bg-slate-800/80 text-xs uppercase text-slate-400 border-b border-slate-200 dark:border-slate-800">
                 <tr>
-                  <th className="px-5 py-3.5">URL Endpoint</th>
-                  <th className="px-5 py-3.5">Sự Kiện Theo Dõi (Events)</th>
-                  <th className="px-5 py-3.5">Signing Secret</th>
+                  <th className="px-5 py-3.5">URL</th>
+                  <th className="px-5 py-3.5">Sự Kiện</th>
+                  <th className="px-5 py-3.5">Mã Bí Mật</th>
                   <th className="px-5 py-3.5">Trạng Thái</th>
                   <th className="px-5 py-3.5 text-right">Thao Tác</th>
                 </tr>
@@ -133,7 +133,7 @@ export default function WebhooksPage() {
                           onClick={() => handlePing(wh.url)}
                           className="h-8 text-xs flex items-center gap-1"
                         >
-                          <Send className="h-3 w-3" /> Test Ping
+                          <Send className="h-3 w-3" /> Gửi Thử
                         </Button>
                         </div>
                       </td>

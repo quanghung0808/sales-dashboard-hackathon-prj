@@ -247,7 +247,7 @@ export default function SalesDashboardPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
         <div>
           <h1 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-indigo-500" /> Sales Assistant Dashboard
+            <Sparkles className="h-5 w-5 text-indigo-500" /> Trợ Lý Sales
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400">
             Tổng Doanh thu biểu đồ xu hướng khớp 100% với Thẻ Doanh Thu Tích Lũy ({formatVND(revenueAchieved)})

@@ -15,7 +15,7 @@ export function PublicFooter() {
               <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-black text-lg">
                 AI
               </div>
-              <span className="text-base font-bold text-slate-900 dark:text-white">AI Sales CRM Copilot</span>
+              <span className="text-base font-bold text-slate-900 dark:text-white">AI Sales CRM</span>
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               Nền tảng Quản trị Bán hàng & Trợ lý AI tích hợp chuẩn REST API Multi-Tenant cho doanh nghiệp hiện đại.
@@ -26,10 +26,10 @@ export function PublicFooter() {
           <div className="space-y-2">
             <h4 className="font-bold text-xs uppercase tracking-wider text-slate-900 dark:text-white">Sản Phẩm</h4>
             <ul className="space-y-1.5 text-xs">
-              <li><Link href="/#features" className="hover:text-blue-500">AI Conversation Summary</Link></li>
-              <li><Link href="/#features" className="hover:text-blue-500">Daily 18:00 AI Summary</Link></li>
-              <li><Link href="/#features" className="hover:text-blue-500">Customer 360° Timeline</Link></li>
-              <li><Link href="/#features" className="hover:text-blue-500">Multi-Tenant CRM</Link></li>
+              <li><Link href="/#features" className="hover:text-blue-500">Tổng Kết Hội Thoại AI</Link></li>
+              <li><Link href="/#features" className="hover:text-blue-500">Báo Cáo AI 18:00 Hàng Ngày</Link></li>
+              <li><Link href="/#features" className="hover:text-blue-500">Dòng Thời Gian Khách Hàng 360°</Link></li>
+              <li><Link href="/#features" className="hover:text-blue-500">Đa Công Ty (Multi-Tenant)</Link></li>
             </ul>
           </div>
 
@@ -37,10 +37,10 @@ export function PublicFooter() {
           <div className="space-y-2">
             <h4 className="font-bold text-xs uppercase tracking-wider text-slate-900 dark:text-white">Dành Cho Developer</h4>
             <ul className="space-y-1.5 text-xs">
-              <li><Link href="/docs" className="hover:text-blue-500 font-semibold text-indigo-400">Public REST API Docs</Link></li>
-              <li><Link href="/docs" className="hover:text-blue-500">Interactive Playground</Link></li>
-              <li><Link href="/settings/api-keys" className="hover:text-blue-500">Quản Lý API Access Keys</Link></li>
-              <li><Link href="/settings/webhooks" className="hover:text-blue-500">Webhooks Events</Link></li>
+              <li><Link href="/docs" className="hover:text-blue-500 font-semibold text-indigo-400">Tài Liệu API</Link></li>
+              <li><Link href="/docs" className="hover:text-blue-500">Thử Nghiệm Tương Tác</Link></li>
+              <li><Link href="/settings/api-keys" className="hover:text-blue-500">Quản Lý API Keys</Link></li>
+              <li><Link href="/settings/webhooks" className="hover:text-blue-500">Webhook</Link></li>
             </ul>
           </div>
 
@@ -57,11 +57,11 @@ export function PublicFooter() {
         </div>
 
         <div className="pt-8 border-t border-slate-200 dark:border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
-          <div>© 2026 AI Sales CRM SaaS Platform. Hackathon Production Demo. All rights reserved.</div>
+          <div>© 2026 Nền tảng AI Sales CRM. Hackathon Production Demo.</div>
           <div className="flex items-center gap-4">
-            <Link href="/docs" className="hover:text-slate-200">API Standard</Link>
-            <Link href="/login" className="hover:text-slate-200">System Status</Link>
-            <Link href="/#privacy" className="hover:text-slate-200">Privacy Policy</Link>
+            <Link href="/docs" className="hover:text-slate-200">Chuẩn API</Link>
+            <Link href="/login" className="hover:text-slate-200">Trạng Thái Hệ Thống</Link>
+            <Link href="/#privacy" className="hover:text-slate-200">Chính Sách Bảo Mật</Link>
           </div>
         </div>
       </div>

@@ -100,8 +100,8 @@ export function CompanyModal({ isOpen, onClose, onSave, company }: CompanyModalP
           <div className="space-y-1.5">
             <label className="text-xs font-semibold">Trạng Thái</label>
             <Select value={status} onChange={(e: any) => setStatus(e.target.value)}>
-              <option value="active">Hoạt động (Active)</option>
-              <option value="inactive">Tạm ngưng (Inactive)</option>
+              <option value="active">Hoạt động</option>
+              <option value="inactive">Tạm ngưng</option>
             </Select>
           </div>
         </div>

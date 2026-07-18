@@ -174,7 +174,7 @@ export default function SalesManagementPage() {
       {/* Page Title (No Subtitle) */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-          <UserCheck className="h-6 w-6 text-blue-500" /> Sales
+          <UserCheck className="h-6 w-6 text-blue-500" /> Quản Lý Sales
         </h1>
         <Button variant="gradient" onClick={handleOpenCreate} className="flex items-center gap-1.5">
           <Plus className="h-4 w-4" /> Thêm Nhân Viên Sales
@@ -215,11 +215,11 @@ export default function SalesManagementPage() {
             <div className="space-y-1.5">
               <label className="text-xs font-semibold">Phòng Ban</label>
               <Select value={department} onChange={(e) => setDepartment(e.target.value)}>
-                <option value="Diamond Sales">Diamond Sales</option>
-                <option value="VIP Consultation">VIP Consultation</option>
-                <option value="Wedding Rings">Wedding Rings</option>
-                <option value="Custom Design">Custom Design</option>
-                <option value="Online Sales">Online Sales</option>
+                <option value="Diamond Sales">Kim Cương</option>
+                <option value="VIP Consultation">Tư Vấn VIP</option>
+                <option value="Wedding Rings">Nhẫn Cưới</option>
+                <option value="Custom Design">Thiết Kế Riêng</option>
+                <option value="Online Sales">Bán Hàng Online</option>
               </Select>
             </div>
             <div className="space-y-1.5">

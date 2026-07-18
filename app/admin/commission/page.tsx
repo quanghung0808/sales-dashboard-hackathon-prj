@@ -54,7 +54,7 @@ export default function CommissionConfigPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-            <Award className="h-6 w-6 text-indigo-500" /> Cấu Hình Chính Sách Hoa Hồng (Commission Rules)
+            <Award className="h-6 w-6 text-indigo-500" /> Cấu Hình Chính Sách Hoa Hồng
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
             Thiết lập bảng bậc hoa hồng dựa trên phần trăm đạt chỉ tiêu KPI của nhân viên Sales

@@ -128,10 +128,10 @@ export function OrdersDonutChart({ height = 240 }: { height?: number }) {
 
 export function KPIProgressChart() {
   const kpiItems = [
-    { label: 'Doanh Thu (Revenue)', current: 820, target: 1000, percent: 82, color: 'from-blue-600 to-indigo-600' },
-    { label: 'Số Đơn Hàng (Orders)', current: 16, target: 20, percent: 80, color: 'from-emerald-500 to-teal-400' },
-    { label: 'Khách Hàng Mới (Customers)', current: 34, target: 40, percent: 85, color: 'from-purple-500 to-pink-500' },
-    { label: 'Tỷ Lệ Chốt Đơn (Conversion)', current: 28, target: 32, percent: 88, color: 'from-amber-500 to-rose-500' },
+    { label: 'Doanh Thu', current: 820, target: 1000, percent: 82, color: 'from-blue-600 to-indigo-600' },
+    { label: 'Số Đơn Hàng', current: 16, target: 20, percent: 80, color: 'from-emerald-500 to-teal-400' },
+    { label: 'Khách Hàng Mới', current: 34, target: 40, percent: 85, color: 'from-purple-500 to-pink-500' },
+    { label: 'Tỉ Lệ Chốt Đơn', current: 28, target: 32, percent: 88, color: 'from-amber-500 to-rose-500' },
   ];
 
   return (

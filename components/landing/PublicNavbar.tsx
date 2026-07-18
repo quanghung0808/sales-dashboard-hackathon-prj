@@ -34,7 +34,7 @@ export function PublicNavbar() {
             <span className="text-base font-bold bg-gradient-to-r from-blue-600 via-indigo-500 to-rose-500 bg-clip-text text-transparent">
               AI Sales CRM
             </span>
-            <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Commercial SaaS</span>
+            <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Nền tảng SaaS</span>
           </div>
         </Link>
 
@@ -76,7 +76,7 @@ export function PublicNavbar() {
 
           <Link href="/login">
             <Button variant="gradient" size="sm" className="flex items-center gap-1.5 font-bold shadow-md">
-              <span>Get Started</span>
+              <span>Bắt Đầu</span>
               <ArrowRight className="h-3.5 w-3.5" />
             </Button>
           </Link>
@@ -120,7 +120,7 @@ export function PublicNavbar() {
             </Link>
             <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
               <Button variant="gradient" className="w-full justify-center">
-                Get Started
+                Bắt Đầu
               </Button>
             </Link>
           </div>

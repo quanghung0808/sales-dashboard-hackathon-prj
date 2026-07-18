@@ -93,7 +93,7 @@ export function GlobalSearchModal({ isOpen, onClose }: GlobalSearchProps) {
         <div className="max-h-[60vh] overflow-y-auto p-4 space-y-4">
           {!query.trim() && (
             <div className="py-8 text-center text-sm text-slate-400">
-              Gõ từ khóa để tìm kiếm trên toàn hệ thống CRM (Khách hàng, Đơn hàng, Hội thoại, Sales)
+              Gõ từ khóa để tìm kiếm (Khách hàng, Đơn hàng, Hội thoại)
             </div>
           )}
 

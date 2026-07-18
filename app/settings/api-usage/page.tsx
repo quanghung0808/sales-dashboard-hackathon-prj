@@ -44,7 +44,7 @@ export default function ApiUsageDashboardPage() {
     <div className="space-y-8 animate-in fade-in duration-200">
       <div>
         <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-          <Activity className="h-6 w-6 text-emerald-500" /> Báo Cáo API Usage & Analytics
+          <Activity className="h-6 w-6 text-emerald-500" /> Báo Cáo Sử Dụng API
         </h1>
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
           Theo dõi lưu lượng truy cập REST API, tốc độ phản hồi (latency) và tỷ lệ thành công của hệ thống Jemmia Diamond
@@ -55,7 +55,7 @@ export default function ApiUsageDashboardPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         <Card className="border-l-4 border-l-blue-500">
           <CardHeader className="pb-1 p-4">
-            <span className="text-xs font-semibold text-slate-500">Tổng API Calls</span>
+            <span className="text-xs font-semibold text-slate-500">Tổng Lượt Gọi</span>
             <Activity className="h-4 w-4 text-blue-500 mt-1" />
           </CardHeader>
           <CardContent className="p-4 pt-0">
@@ -66,7 +66,7 @@ export default function ApiUsageDashboardPage() {
 
         <Card className="border-l-4 border-l-indigo-500">
           <CardHeader className="pb-1 p-4">
-            <span className="text-xs font-semibold text-slate-500">API Calls Hôm Nay</span>
+            <span className="text-xs font-semibold text-slate-500">Lượt Gọi Hôm Nay</span>
             <Zap className="h-4 w-4 text-indigo-500 mt-1" />
           </CardHeader>
           <CardContent className="p-4 pt-0">
@@ -77,29 +77,29 @@ export default function ApiUsageDashboardPage() {
 
         <Card className="border-l-4 border-l-emerald-500">
           <CardHeader className="pb-1 p-4">
-            <span className="text-xs font-semibold text-slate-500">Success Rate</span>
+            <span className="text-xs font-semibold text-slate-500">Tỉ Lệ Thành Công</span>
             <CheckCircle2 className="h-4 w-4 text-emerald-500 mt-1" />
           </CardHeader>
           <CardContent className="p-4 pt-0">
             <div className="text-2xl font-bold text-emerald-500">{successRate}%</div>
-            <span className="text-[10px] text-slate-400">SLA 99.9% Available</span>
+            <span className="text-[10px] text-slate-400">Cam kết 99.9%</span>
           </CardContent>
         </Card>
 
         <Card className="border-l-4 border-l-rose-500">
           <CardHeader className="pb-1 p-4">
-            <span className="text-xs font-semibold text-slate-500">Yêu Cầu Lỗi (Failed)</span>
+            <span className="text-xs font-semibold text-slate-500">Yêu Cầu Lỗi</span>
             <AlertCircle className="h-4 w-4 text-rose-500 mt-1" />
           </CardHeader>
           <CardContent className="p-4 pt-0">
             <div className="text-2xl font-bold text-rose-500">{failedRequests}</div>
-            <span className="text-[10px] text-slate-400">Chủ yếu do 401 Unauthorized</span>
+            <span className="text-[10px] text-slate-400">Chủ yếu do thiếu quyền truy cập</span>
           </CardContent>
         </Card>
 
         <Card className="border-l-4 border-l-amber-500">
           <CardHeader className="pb-1 p-4">
-            <span className="text-xs font-semibold text-slate-500">Avg Latency</span>
+            <span className="text-xs font-semibold text-slate-500">Độ Trễ Trung Bình</span>
             <Clock className="h-4 w-4 text-amber-500 mt-1" />
           </CardHeader>
           <CardContent className="p-4 pt-0">
@@ -164,7 +164,7 @@ export default function ApiUsageDashboardPage() {
       {/* Recent Request Logs */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Nhật Ký Gọi API Mới Nhất (Real-Time API Logs)</CardTitle>
+          <CardTitle className="text-base">Nhật Ký Gọi API Mới Nhất</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
@@ -174,7 +174,7 @@ export default function ApiUsageDashboardPage() {
                   <th className="px-5 py-3">Phương Thức</th>
                   <th className="px-5 py-3">Endpoint</th>
                   <th className="px-5 py-3">API Key Sử Dụng</th>
-                  <th className="px-5 py-3">Mã HTTP Status</th>
+                  <th className="px-5 py-3">Mã Phản Hồi</th>
                   <th className="px-5 py-3">Thời Gian Phản Hồi</th>
                   <th className="px-5 py-3">Thời Gian</th>
                 </tr>
@@ -191,7 +191,7 @@ export default function ApiUsageDashboardPage() {
                     <td className="px-5 py-3.5 text-xs text-slate-400">{log.apiKeyName}</td>
                     <td className="px-5 py-3.5">
                       <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${log.statusCode < 300 ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'}`}>
-                        {log.statusCode} OK
+                        {log.statusCode}
                       </span>
                     </td>
                     <td className="px-5 py-3.5 font-mono text-xs text-amber-400">{log.responseTimeMs} ms</td>

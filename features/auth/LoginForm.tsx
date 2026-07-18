@@ -46,7 +46,7 @@ export function LoginForm() {
           AI
         </div>
         <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-blue-600 via-indigo-500 to-rose-500 bg-clip-text text-transparent">
-          AI Sales CRM Dashboard
+          AI Sales CRM
         </h1>
         <p className="text-xs text-slate-400">
           Nền tảng Quản trị & Trợ lý Bán hàng Thông minh
@@ -91,7 +91,7 @@ export function LoginForm() {
           }`}
         >
           <UserCheck className="h-4 w-4" />
-          <span>Sales Rep</span>
+                <span>Sale</span>
         </button>
       </div>
 
@@ -133,7 +133,7 @@ export function LoginForm() {
         {/* Quick Preset Login Buttons */}
         <div className="pt-3 border-t border-slate-200 dark:border-slate-800 space-y-2">
           <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 text-center">
-            Demo 1-Click Login Presets
+            Demo 1-Click Đăng Nhập
           </div>
           <div className="grid grid-cols-3 gap-2">
             <Button

@@ -56,7 +56,7 @@ export default function SettingsPage() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-base">
-            <User className="h-5 w-5 text-indigo-500" /> Hồ Sơ Cá Nhân ({role.replace('_', ' ')})
+            <User className="h-5 w-5 text-indigo-500" /> Hồ Sơ Cá Nhân
           </CardTitle>
         </CardHeader>
         <CardContent>

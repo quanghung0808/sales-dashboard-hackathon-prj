@@ -69,7 +69,7 @@ export default function ApiAccessKeysPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-            <Key className="h-6 w-6 text-indigo-500" /> Quản Lý API Access Keys (Multi-Tenant)
+            <Key className="h-6 w-6 text-indigo-500" /> Quản Lý API Keys
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
             Khóa truy cập REST API để kết nối hệ thống CRM / ERP / E-commerce riêng của công ty Jemmia Diamond
@@ -132,7 +132,7 @@ export default function ApiAccessKeysPage() {
                           <button
                             onClick={() => copyToClipboard(k.key, k.id)}
                             className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-blue-500 dark:hover:bg-slate-800"
-                            title="Copy API Key"
+                            title="Sao chép"
                           >
                             <Copy className="h-4 w-4" />
                           </button>
@@ -142,14 +142,14 @@ export default function ApiAccessKeysPage() {
                                 regenerateMutation.mutate(k.id);
                             }}
                             className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-amber-500 dark:hover:bg-slate-800"
-                            title="Regenerate Key"
+                            title="Cấp lại"
                           >
                             <RefreshCw className="h-4 w-4" />
                           </button>
                           <button
                             onClick={() => toggleStatusMutation.mutate(k.id)}
                             className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-purple-500 dark:hover:bg-slate-800"
-                            title={k.status === 'Active' ? 'Disable Key' : 'Enable Key'}
+                            title={k.status === 'Active' ? 'Vô hiệu' : 'Kích hoạt'}
                           >
                             <Power className="h-4 w-4" />
                           </button>
@@ -164,7 +164,7 @@ export default function ApiAccessKeysPage() {
         </CardContent>
       </Card>
 
-      <Dialog isOpen={isCreateOpen} onClose={() => setIsCreateOpen(false)} title="Tạo API Access Key Mới">
+      <Dialog isOpen={isCreateOpen} onClose={() => setIsCreateOpen(false)} title="Tạo API Key Mới">
         <form
           onSubmit={(e) => {
             e.preventDefault();

@@ -87,7 +87,7 @@ export default function AISettingsPage() {
     <div className="max-w-4xl space-y-8 animate-in fade-in duration-200">
       <div>
         <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-          <Bot className="h-6 w-6 text-indigo-500" /> Cấu Hình AI Models & API Keys
+          <Bot className="h-6 w-6 text-indigo-500" /> Cấu Hình AI
         </h1>
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
           Quản lý tích hợp AI cho tính năng phân tích cuộc gọi, chấm điểm lead & sinh báo cáo tự động (Mock Mode)
@@ -111,7 +111,7 @@ export default function AISettingsPage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Sparkles className="h-5 w-5 text-amber-500" /> Chọn Mô Hình AI Mặc Định (AI Engine Model)
+              <Sparkles className="h-5 w-5 text-amber-500" /> Chọn Mô Hình AI Mặc Định
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -135,7 +135,7 @@ export default function AISettingsPage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Key className="h-5 w-5 text-blue-500" /> Cấu Hình API Keys Doanh Nghiệp
+              <Key className="h-5 w-5 text-blue-500" /> Cấu Hình API Keys
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
