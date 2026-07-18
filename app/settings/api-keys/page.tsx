@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { ApiKeyService } from '@/services/repositories/ApiKeyService';
 import { ApiKey } from '@/types';
-import { Key, Plus, Copy, RefreshCw, Power, Trash2, CheckCircle2, Shield, Eye, EyeOff } from 'lucide-react';
+import { Key, Plus, Copy, RefreshCw, Power, CheckCircle2, Shield, Eye, EyeOff } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -152,15 +152,6 @@ export default function ApiAccessKeysPage() {
                             title={k.status === 'Active' ? 'Disable Key' : 'Enable Key'}
                           >
                             <Power className="h-4 w-4" />
-                          </button>
-                          <button
-                            onClick={() => {
-                              if (confirm('Xóa API Key này vĩnh viễn?')) deleteMutation.mutate(k.id);
-                            }}
-                            className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-rose-500 dark:hover:bg-slate-800"
-                            title="Delete Key"
-                          >
-                            <Trash2 className="h-4 w-4" />
                           </button>
                         </div>
                       </td>

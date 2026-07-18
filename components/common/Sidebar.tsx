@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuthStore } from '@/hooks/useAuthStore';
@@ -12,17 +12,12 @@ import {
   UserCheck,
   MessageSquare,
   ShoppingBag,
-  Target,
   Sparkles,
   User,
   ChevronLeft,
   ChevronRight,
   Bot,
-  Award,
   Key,
-  BookOpen,
-  Radio,
-  Activity,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -34,7 +29,23 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
   const pathname = usePathname();
   const { role, user } = useAuthStore();
 
-  const companyDisplayName = user?.companyName || 'Jemmia Diamond';
+  const displayName = role === 'super_admin' ? 'Sales Pilot' : user?.companyName || 'Jemmia Diamond';
+
+  const [disabled, setDisabled] = useState<Set<string>>(new Set());
+
+  const deactivatable: Record<string, string[]> = {
+    super_admin: ['/super-admin/companies', '/super-admin/admins'],
+    company_admin: ['/admin/sales'],
+  };
+
+  const toggleItem = (href: string) => {
+    setDisabled((prev) => {
+      const next = new Set(prev);
+      if (next.has(href)) next.delete(href);
+      else next.add(href);
+      return next;
+    });
+  };
 
   const navItems = [
     // Super Admin Routes
@@ -59,28 +70,10 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
 
     // Company Admin Routes
     {
-      label: 'Báo Cáo Công Ty',
-      href: '/admin/dashboard',
-      icon: LayoutDashboard,
-      roles: ['company_admin'],
-    },
-    {
       label: 'Sales',
       href: '/admin/sales',
       icon: UserCheck,
       roles: ['company_admin'],
-    },
-    {
-      label: 'Chỉ Tiêu KPI',
-      href: '/admin/kpi',
-      icon: Target,
-      roles: ['super_admin'],
-    },
-    {
-      label: 'Cấu Hình Hoa Hồng',
-      href: '/admin/commission',
-      icon: Award,
-      roles: ['super_admin'],
     },
     {
       label: 'Cấu Hình AI',
@@ -120,37 +113,20 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
       label: 'API Access Keys',
       href: '/settings/api-keys',
       icon: Key,
-      roles: ['super_admin', 'company_admin'],
+      roles: ['company_admin'],
     },
-    {
-      label: 'Tài Liệu REST API',
-      href: '/settings/api-docs',
-      icon: BookOpen,
-      roles: ['super_admin'],
-    },
-    {
-      label: 'Webhooks Event',
-      href: '/settings/webhooks',
-      icon: Radio,
-      roles: ['super_admin'],
-    },
-    {
-      label: 'API Usage Analytics',
-      href: '/settings/api-usage',
-      icon: Activity,
-      roles: ['super_admin'],
-    },
-
     // Shared Profile
     {
       label: 'Hồ sơ',
       href: '/settings',
       icon: User,
-      roles: ['super_admin', 'company_admin', 'sales'],
+      roles: ['company_admin', 'sales'],
     },
   ];
 
   const filteredItems = navItems.filter((item) => item.roles.includes(role));
+
+  const canToggle = (href: string) => (deactivatable[role] || []).includes(href);
 
   return (
     <aside
@@ -168,7 +144,7 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
           {!isCollapsed && (
             <div className="flex flex-col truncate">
               <span className="text-sm font-extrabold text-slate-900 dark:text-white truncate">
-                {companyDisplayName}
+                {displayName}
               </span>
               <span className="text-[10px] font-medium uppercase tracking-wider text-slate-400">
                 {role === 'super_admin' ? 'Super Admin' : role === 'company_admin' ? 'Company Admin' : 'Sales Workspace'}
@@ -189,24 +165,57 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
       <div className="flex-1 space-y-1.5 p-3 overflow-y-auto">
         {filteredItems.map((item) => {
           const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== '/settings');
+          const isDisabled = disabled.has(item.href);
+          const showToggle = canToggle(item.href);
           const Icon = item.icon;
 
           return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                'flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium transition-all duration-200',
-                isActive
-                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20'
-                  : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/70 dark:hover:text-slate-100',
-                isCollapsed && 'justify-center px-0'
+            <div key={item.href}>
+              {showToggle ? (
+                <button
+                  onClick={() => toggleItem(item.href)}
+                  className={cn(
+                    'flex w-full items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium transition-all duration-200',
+                    isActive && !isDisabled
+                      ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20'
+                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/70 dark:hover:text-slate-100',
+                    isDisabled && 'opacity-40 line-through',
+                    isCollapsed && 'justify-center px-0'
+                  )}
+                  title={isCollapsed ? item.label : undefined}
+                >
+                  <Icon className="h-5 w-5 shrink-0" />
+                  {!isCollapsed && (
+                    <>
+                      <span className="truncate flex-1 text-left">{item.label}</span>
+                      <span className={cn(
+                        'text-[10px] font-semibold px-1.5 py-0.5 rounded-full',
+                        isDisabled
+                          ? 'bg-rose-100 text-rose-500 dark:bg-rose-900/30 dark:text-rose-400'
+                          : 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400'
+                      )}>
+                        {isDisabled ? 'Không hoạt động' : 'Hoạt động'}
+                      </span>
+                    </>
+                  )}
+                </button>
+              ) : (
+                <Link
+                  href={item.href}
+                  className={cn(
+                    'flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium transition-all duration-200',
+                    isActive
+                      ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/20'
+                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/70 dark:hover:text-slate-100',
+                    isCollapsed && 'justify-center px-0'
+                  )}
+                  title={isCollapsed ? item.label : undefined}
+                >
+                  <Icon className="h-5 w-5 shrink-0" />
+                  {!isCollapsed && <span className="truncate">{item.label}</span>}
+                </Link>
               )}
-              title={isCollapsed ? item.label : undefined}
-            >
-              <Icon className="h-5 w-5 shrink-0" />
-              {!isCollapsed && <span className="truncate">{item.label}</span>}
-            </Link>
+            </div>
           );
         })}
       </div>

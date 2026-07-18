@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { KPIService } from '@/services/repositories/KPIService';
 import { CommissionRule } from '@/types';
-import { Award, Plus, Trash2, Edit3, CheckCircle2 } from 'lucide-react';
+import { Award, Plus, Edit3, CheckCircle2 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -102,12 +102,6 @@ export default function CommissionConfigPage() {
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <button
-                        onClick={() => handleDeleteRule(rule.id)}
-                        className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-rose-500 dark:hover:bg-slate-800"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
                     </td>
                   </tr>
                 ))}

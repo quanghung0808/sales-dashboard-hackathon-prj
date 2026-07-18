@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select } from '@/components/ui/select';
 import { Dialog } from '@/components/ui/dialog';
-import { Plus, Edit3, Trash2, UserCheck } from 'lucide-react';
+import { Plus, Edit3, UserCheck } from 'lucide-react';
 import { formatFullVND } from '@/lib/utils';
 
 export default function SalesManagementPage() {
@@ -130,18 +130,18 @@ export default function SalesManagementPage() {
     },
     {
       accessorKey: 'kpiAchieved',
-      header: 'Đạt KPI (%)',
+      header: () => <div className="text-right">Đạt KPI (%)</div>,
       cell: ({ row }) => {
         const val = row.original.kpiAchieved;
         const color = val >= 100 ? 'text-emerald-500 font-bold' : val >= 80 ? 'text-amber-500 font-bold' : 'text-rose-500';
-        return <span className={color}>{val}%</span>;
+        return <div className="text-right"><span className={color}>{val}%</span></div>;
       },
     },
     {
       accessorKey: 'commissionRate',
-      header: '% Hoa Hồng',
+      header: () => <div className="text-right">% Hoa Hồng</div>,
       cell: ({ row }) => (
-        <span className="font-extrabold text-amber-500">{row.original.commissionRate || 4}%</span>
+        <div className="text-right"><span className="font-extrabold text-amber-500">{row.original.commissionRate || 4}%</span></div>
       ),
     },
     {
@@ -163,14 +163,6 @@ export default function SalesManagementPage() {
             className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-amber-500 dark:hover:bg-slate-800"
           >
             <Edit3 className="h-4 w-4" />
-          </button>
-          <button
-            onClick={() => {
-              if (confirm(`Xóa nhân viên ${row.original.name}?`)) deleteMutation.mutate(row.original.id);
-            }}
-            className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-rose-500 dark:hover:bg-slate-800"
-          >
-            <Trash2 className="h-4 w-4" />
           </button>
         </div>
       ),

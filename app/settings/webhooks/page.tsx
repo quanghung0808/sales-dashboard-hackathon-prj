@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { WebhookService } from '@/services/repositories/WebhookService';
 import { WebhookEndpoint } from '@/types';
-import { Radio, Plus, Trash2, CheckCircle2, ShieldAlert, Send } from 'lucide-react';
+import { Radio, Plus, CheckCircle2, ShieldAlert, Send } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -135,16 +135,8 @@ export default function WebhooksPage() {
                         >
                           <Send className="h-3 w-3" /> Test Ping
                         </Button>
-                        <button
-                          onClick={() => {
-                            if (confirm('Xóa Webhook Endpoint này?')) deleteMutation.mutate(wh.id);
-                          }}
-                          className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-rose-500 dark:hover:bg-slate-800"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </button>
-                      </div>
-                    </td>
+                        </div>
+                      </td>
                   </tr>
                 ))}
               </tbody>

@@ -3,144 +3,97 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { CompanyService } from '@/services/repositories/CompanyService';
-import { SalesService } from '@/services/repositories/SalesService';
-import { Building2, Users, DollarSign, TrendingUp, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { RevenueTrendChart, SalesDistributionChart, OrdersStatusChart } from '@/components/charts/CRMCharts';
-import { formatVND } from '@/lib/utils';
-import { Skeleton } from '@/components/ui/skeleton';
+import { formatFullVND } from '@/lib/utils';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
+
+const COLORS = ['#3b82f6', '#6366f1', '#ec4899', '#f59e0b', '#10b981', '#8b5cf6', '#ef4444', '#14b8a6'];
+
+const SEAT_PRICE = 99000; // 99k/tháng/sales
+
+function calcPlatformFee(salesCount: number | undefined): number {
+  return (salesCount || 5) * SEAT_PRICE * 12;
+}
 
 export default function SuperAdminDashboardPage() {
-  const { data: companies = [], isLoading: loadingComp } = useQuery({
+  const { data: companies = [] } = useQuery({
     queryKey: ['companies'],
     queryFn: () => CompanyService.getAllCompanies(),
   });
 
-  const { data: sales = [], isLoading: loadingSales } = useQuery({
-    queryKey: ['allSales'],
-    queryFn: () => SalesService.getAllSales(),
-  });
+  const chartData = companies.map((c, i) => ({
+    name: c.name,
+    value: calcPlatformFee(c.salesCount),
+    fill: COLORS[i % COLORS.length],
+  }));
 
-  const totalRevenue = companies.reduce((acc, c) => acc + (c.totalRevenue || 0), 0);
-  const activeCompanies = companies.filter((c) => c.status === 'active').length;
+  const totalPlatform = chartData.reduce((acc, d) => acc + d.value, 0);
 
   return (
     <div className="space-y-8 animate-in fade-in duration-200">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-            <Sparkles className="h-6 w-6 text-indigo-500" /> Super Admin Global Dashboard
+            <Sparkles className="h-6 w-6 text-indigo-500" /> Tổng Quan Hệ Thống
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            Tổng quan hiệu suất kinh doanh toàn bộ 5 công ty đối tác CRM
+            Doanh thu nền tảng — Tổng {formatFullVND(totalPlatform)}/năm
           </p>
         </div>
       </div>
 
-      {/* Overview Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        <Card className="border-l-4 border-l-blue-500">
-          <CardHeader className="pb-2">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-500">Tổng Công Ty</span>
-              <Building2 className="h-4 w-4 text-blue-500" />
-            </div>
-          </CardHeader>
-          <CardContent>
-            {loadingComp ? (
-              <Skeleton className="h-8 w-20" />
-            ) : (
-              <div className="text-2xl font-bold">{companies.length} đối tác</div>
-            )}
-          </CardContent>
-        </Card>
-
-        <Card className="border-l-4 border-l-indigo-500">
-          <CardHeader className="pb-2">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-500">Tổng Nhân Viên Sales</span>
-              <Users className="h-4 w-4 text-indigo-500" />
-            </div>
-          </CardHeader>
-          <CardContent>
-            {loadingSales ? (
-              <Skeleton className="h-8 w-20" />
-            ) : (
-              <div className="text-2xl font-bold">{sales.length} nhân sự</div>
-            )}
-          </CardContent>
-        </Card>
-
-        <Card className="border-l-4 border-l-emerald-500">
-          <CardHeader className="pb-2">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-500">Tổng Doanh Thu</span>
-              <DollarSign className="h-4 w-4 text-emerald-500" />
-            </div>
-          </CardHeader>
-          <CardContent>
-            {loadingComp ? (
-              <Skeleton className="h-8 w-24" />
-            ) : (
-              <div className="text-2xl font-bold text-emerald-500">{formatVND(totalRevenue)}</div>
-            )}
-          </CardContent>
-        </Card>
-
-        <Card className="border-l-4 border-l-purple-500">
-          <CardHeader className="pb-2">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-500">Công Ty Hoạt Động</span>
-              <CheckCircle2 className="h-4 w-4 text-purple-500" />
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{activeCompanies} / {companies.length}</div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-l-4 border-l-amber-500">
-          <CardHeader className="pb-2">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-500">Tăng Trưởng Tháng</span>
-              <TrendingUp className="h-4 w-4 text-amber-500" />
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-amber-500">+18.4% YoY</div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="lg:col-span-2">
-          <CardHeader>
-            <CardTitle>Xu Hướng Doanh Thu Toàn Hệ Thống (Tháng 1 - Tháng 7)</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <RevenueTrendChart height={300} />
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Tỷ Trọng Doanh Thu Theo Công Ty</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <SalesDistributionChart height={300} />
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Order Status Distribution */}
       <Card>
         <CardHeader>
-          <CardTitle>Phân Phối Đơn Hàng Theo Trạng Thái (800 Đơn Mock Data)</CardTitle>
+          <CardTitle>Doanh Thu Nền Tảng Theo Công Ty</CardTitle>
         </CardHeader>
         <CardContent>
-          <OrdersStatusChart height={260} />
+          {chartData.length === 0 ? (
+            <p className="text-sm text-slate-400 py-8 text-center">Chưa có dữ liệu</p>
+          ) : (
+            <div className="flex flex-col lg:flex-row items-center gap-8">
+              <div className="w-full lg:w-1/2" style={{ height: 340 }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={chartData}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={80}
+                      outerRadius={140}
+                      paddingAngle={3}
+                      dataKey="value"
+                      nameKey="name"
+                    >
+                      {chartData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.fill} />
+                      ))}
+                    </Pie>
+                    <Tooltip
+                      contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '12px', color: '#fff' }}
+                      formatter={(value: any) => [formatFullVND(Number(value) || 0) + '/năm', 'Phí nền tảng']}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+              <div className="w-full lg:w-1/2 space-y-3">
+                {chartData.map((d) => {
+                  const pct = ((d.value / totalPlatform) * 100).toFixed(1);
+                  const seats = companies.find((c) => c.name === d.name)?.salesCount || 0;
+                  return (
+                    <div key={d.name} className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40">
+                      <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: d.fill }} />
+                      <div className="flex-1 min-w-0">
+                        <div className="font-semibold text-sm text-slate-800 dark:text-slate-200 truncate">{d.name}</div>
+                        <div className="text-xs text-slate-400">{seats} sales &middot; {formatFullVND(d.value)}/năm</div>
+                      </div>
+                      <div className="text-lg font-extrabold text-slate-700 dark:text-slate-300">{pct}%</div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>

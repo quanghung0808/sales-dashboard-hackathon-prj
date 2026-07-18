@@ -17,13 +17,7 @@ export function Header() {
   const [isNotifOpen, setIsNotifOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-slate-200/80 bg-white/80 px-6 backdrop-blur-md dark:border-slate-800/80 dark:bg-slate-900/80">
-      {/* Left Title / Workspace info */}
-      <div className="flex items-center gap-3">
-        <h2 className="text-sm font-bold text-slate-800 dark:text-slate-200">
-          {user?.companyName || 'Jemmia Diamond'} • Workspace
-        </h2>
-      </div>
+    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-end border-b border-slate-200/80 bg-white/80 px-6 backdrop-blur-md dark:border-slate-800/80 dark:bg-slate-900/80">
 
       {/* Right Header Actions */}
       <div className="flex items-center gap-3">

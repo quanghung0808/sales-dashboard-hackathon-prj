@@ -30,9 +30,9 @@ export function LoginForm() {
     e.preventDefault();
     loginAs(selectedRole);
     if (selectedRole === 'super_admin') {
-      router.push('/super-admin/dashboard');
+      router.push('/super-admin/companies');
     } else if (selectedRole === 'company_admin') {
-      router.push('/admin/dashboard');
+      router.push('/admin/sales');
     } else {
       router.push('/sales/dashboard');
     }
@@ -142,7 +142,7 @@ export function LoginForm() {
               size="sm"
               onClick={() => {
                 loginAs('super_admin');
-                router.push('/super-admin/dashboard');
+                router.push('/super-admin/companies');
               }}
               className="text-[11px] py-1 px-1 h-8"
             >
@@ -154,7 +154,7 @@ export function LoginForm() {
               size="sm"
               onClick={() => {
                 loginAs('company_admin');
-                router.push('/admin/dashboard');
+                router.push('/admin/sales');
               }}
               className="text-[11px] py-1 px-1 h-8 truncate"
             >

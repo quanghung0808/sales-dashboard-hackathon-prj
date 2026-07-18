@@ -154,11 +154,18 @@ export function KPIProgressChart() {
   );
 }
 
-export function OrdersStatusChart({ height = 260 }: { height?: number }) {
+interface OrderStatusItem {
+  status: string;
+  count: number;
+  fill: string;
+}
+
+export function OrdersStatusChart({ height = 260, data }: { height?: number; data?: OrderStatusItem[] }) {
+  const chartData = data && data.length > 0 ? data : ORDER_STATUS_DATA;
   return (
     <div className="w-full" style={{ height }}>
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={ORDER_STATUS_DATA} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+        <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#334155" opacity={0.2} />
           <XAxis dataKey="status" tickLine={false} stroke="#94a3b8" fontSize={11} />
           <YAxis tickLine={false} stroke="#94a3b8" fontSize={12} />
@@ -166,7 +173,7 @@ export function OrdersStatusChart({ height = 260 }: { height?: number }) {
             contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '12px', color: '#fff' }}
           />
           <Bar dataKey="count" radius={[8, 8, 0, 0]}>
-            {ORDER_STATUS_DATA.map((entry, index) => (
+            {chartData.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={entry.fill} />
             ))}
           </Bar>

@@ -9,7 +9,7 @@ import { GenericDataTable } from '@/components/tables/GenericDataTable';
 import { CompanyModal } from '@/features/companies/CompanyModal';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Edit3, Trash2, Eye, Building2 } from 'lucide-react';
+import { Plus, Edit3, Eye, Building2 } from 'lucide-react';
 import { formatVND, getStatusBadge } from '@/lib/utils';
 import { Dialog } from '@/components/ui/dialog';
 
@@ -115,17 +115,6 @@ export default function SuperAdminCompaniesPage() {
             title="Chỉnh Sửa"
           >
             <Edit3 className="h-4 w-4" />
-          </button>
-          <button
-            onClick={() => {
-              if (confirm(`Xóa công ty ${row.original.name}?`)) {
-                deleteMutation.mutate(row.original.id);
-              }
-            }}
-            className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-rose-500 dark:hover:bg-slate-800"
-            title="Xóa"
-          >
-            <Trash2 className="h-4 w-4" />
           </button>
         </div>
       ),

@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select } from '@/components/ui/select';
 import { Dialog } from '@/components/ui/dialog';
-import { Plus, Users, Trash2 } from 'lucide-react';
+import { Plus, Users } from 'lucide-react';
 
 export default function SuperAdminAdminsPage() {
   const queryClient = useQueryClient();
@@ -86,22 +86,6 @@ export default function SuperAdminAdminsPage() {
     {
       accessorKey: 'createdAt',
       header: 'Ngày Khởi Tạo',
-    },
-    {
-      id: 'actions',
-      header: 'Thao Tác',
-      cell: ({ row }) => (
-        <button
-          onClick={() => {
-            if (confirm(`Xóa Admin ${row.original.name}?`)) {
-              deleteMutation.mutate(row.original.id);
-            }
-          }}
-          className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-rose-500 dark:hover:bg-slate-800"
-        >
-          <Trash2 className="h-4 w-4" />
-        </button>
-      ),
     },
   ];
 
