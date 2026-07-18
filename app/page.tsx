@@ -241,7 +241,7 @@ export default function PublicLandingPage() {
             Giải Pháp Theo Ngành Trọng Điểm
           </h2>
           <p className="text-slate-500 dark:text-slate-400 text-sm max-w-2xl mx-auto">
-            Ứng dụng AI Sales Copilot tùy biến linh hoạt cho mọi lĩnh vực kinh doanh
+            Ứng dụng AI Sales Pilot tùy biến linh hoạt cho mọi lĩnh vực kinh doanh
           </p>
         </div>
 

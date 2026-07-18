@@ -45,7 +45,7 @@ export class MockAIService {
     const greetingVariations = [
       `👋 ${greetingTime}, ${salesName}!`,
       `✨ Xin chào ${salesName}, chúc bạn một ngày làm việc bùng nổ doanh số!`,
-      `🚀 ${greetingTime} ${salesName}, Trợ lý AI Copilot đã sẵn sàng hỗ trợ bạn!`,
+      `🚀 ${greetingTime} ${salesName}, Trợ lý AI Pilot đã sẵn sàng hỗ trợ bạn!`,
     ];
 
     const kpiVariations = [

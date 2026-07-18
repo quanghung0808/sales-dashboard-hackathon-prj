@@ -185,19 +185,7 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
                   title={isCollapsed ? item.label : undefined}
                 >
                   <Icon className="h-5 w-5 shrink-0" />
-                  {!isCollapsed && (
-                    <>
-                      <span className="truncate flex-1 text-left">{item.label}</span>
-                      <span className={cn(
-                        'text-[10px] font-semibold px-1.5 py-0.5 rounded-full',
-                        isDisabled
-                          ? 'bg-rose-100 text-rose-500 dark:bg-rose-900/30 dark:text-rose-400'
-                          : 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400'
-                      )}>
-                        {isDisabled ? 'Không hoạt động' : 'Hoạt động'}
-                      </span>
-                    </>
-                  )}
+                  {!isCollapsed && <span className="truncate flex-1 text-left">{item.label}</span>}
                 </button>
               ) : (
                 <Link
