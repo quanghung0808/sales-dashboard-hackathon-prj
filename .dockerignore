@@ -5,6 +5,3 @@ node_modules
 *.md
 .env*
 .eslintrc*
-tsconfig.json
-postcss.config.mjs
-next.config.ts
