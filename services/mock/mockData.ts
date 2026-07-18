@@ -207,36 +207,29 @@ export function generateMockOrders(customers: Customer[], salesList: SalesRep[])
     'Refunded'
   ];
 
-  // Daily revenue per active day will total around 30M to 500M VND
   for (let i = 1; i <= 800; i++) {
     const customer = customers[(i - 1) % customers.length];
     const sales = salesList.find(s => s.id === customer.assignedSalesId) || salesList[0];
     const product = PRODUCTS[i % PRODUCTS.length];
     
-    // Each individual order is between 25,000,000đ and 250,000,000đ
     const amount = Math.floor(25000000 + Math.random() * 225000000);
     const status = STATUS_WEIGHTS[i % STATUS_WEIGHTS.length];
     const commission = Math.floor(amount * 0.04);
 
     let dateStr = '2026-07-18';
     if (i <= 3) {
-      // Today (2026-07-18): 2-3 orders totaling 180M - 350M VND (within 30M - 500M daily range!)
       dateStr = '2026-07-18';
     } else if (i <= 25) {
-      // This Week (2026-07-13 to 2026-07-17): 3-4 orders per day totaling 70M - 420M per day
       const day = 13 + (i % 5);
       dateStr = `2026-07-${day < 10 ? '0' + day : day}`;
     } else if (i <= 150) {
-      // This Month (2026-07-01 to 2026-07-12)
       const day = 1 + (i % 12);
       dateStr = `2026-07-${day < 10 ? '0' + day : day}`;
     } else if (i <= 450) {
-      // Q2/Q3 2026
       const month = 4 + (i % 3);
       const day = 10 + (i % 18);
       dateStr = `2026-0${month}-${day}`;
     } else {
-      // Months T1 to T3 2026
       const month = 1 + (i % 3);
       const day = 10 + (i % 18);
       dateStr = `2026-0${month}-${day}`;
@@ -435,12 +428,29 @@ export const INITIAL_TASKS: TaskItem[] = [
   { id: 'task-6', title: 'Review monthly sales quota', subtitle: 'Cập nhật lại dự báo doanh số tuần 4', priority: 'Low', completed: false, dueDate: 'Tomorrow, 9:00 AM' },
 ];
 
-export const INITIAL_NOTIFICATIONS: NotificationItem[] = [
-  { id: 'notif-1', title: '🎯 KPI Reached 78%', message: 'Nguyễn Văn An vừa đạt 78% chỉ tiêu doanh số tháng 7/2026!', type: 'kpi', timestamp: '10 phút trước', read: false },
-  { id: 'notif-2', title: '👤 Khách hàng VIP mới', message: 'Khách hàng Phạm Minh Tuấn (VIP) được gán cho bạn.', type: 'customer', timestamp: '1 giờ trước', read: false },
-  { id: 'notif-3', title: '💰 Đơn hàng mới #ORD-2088', message: 'Đơn hàng 145,000,000đ đã được thanh toán thành công.', type: 'order', timestamp: '3 giờ trước', read: true },
-  { id: 'notif-4', title: '🤖 Báo cáo AI Daily Summary', message: 'Báo cáo tổng hợp doanh số và hiệu suất ngày 18/07 đã sẵn sàng.', type: 'ai_summary', timestamp: 'Hôm qua', read: true },
-];
+// Distinct Role-Based Notifications
+export const ROLE_NOTIFICATIONS: Record<string, NotificationItem[]> = {
+  super_admin: [
+    { id: 'notif-sa-1', title: '🏢 Tenant Khởi Tạo Mới', message: 'Công ty Diamond World vừa hoàn tất khởi tạo tenant workspace thành công.', type: 'customer', timestamp: '5 phút trước', read: false },
+    { id: 'notif-sa-2', title: '⚡ Băng Thông REST API Gateway', message: 'Hệ thống API Gateway đã tự động mở rộng hạn mức xử lý 10,000 req/min.', type: 'kpi', timestamp: '25 phút trước', read: false },
+    { id: 'notif-sa-3', title: '🛡️ Audit Bảo Mật Định Kỳ', message: 'Hệ thống đạt chỉ số an toàn 100%, 0 lỗ hổng trong đợt quét tuần 28.', type: 'ai_summary', timestamp: '2 giờ trước', read: true },
+    { id: 'notif-sa-4', title: '📊 Báo Cáo SaaS ARR Platform', message: 'Tổng giá trị hợp đồng năm (ARR) toàn hệ thống đạt mốc $450,000 USD.', type: 'order', timestamp: '1 ngày trước', read: true },
+  ],
+  company_admin: [
+    { id: 'notif-ca-1', title: '🎯 KPI Công Ty Đạt 82%', message: 'Jemmia Diamond vừa hoàn thành 82% chỉ tiêu doanh số tháng 7/2026 (1,85 tỷ VNĐ).', type: 'kpi', timestamp: '10 phút trước', read: false },
+    { id: 'notif-ca-2', title: '👤 Nhân Viên Sales Mới Gia Nhập', message: 'Lê Minh Tuấn vừa gia nhập bộ phận VIP Consultation của công ty.', type: 'customer', timestamp: '1 giờ trước', read: false },
+    { id: 'notif-ca-3', title: '🤖 Cảnh Báo Hạn Mức AI Quota', message: 'Gói API OpenAI GPT-5 công ty đã sử dụng 65% hạn mức khả dụng.', type: 'ai_summary', timestamp: '3 giờ trước', read: true },
+    { id: 'notif-ca-4', title: '💰 Phê Duyệt Hoa Hồng Doanh Số', message: 'Đã tự động tính toán tổng hoa hồng 142,000,000đ cho 22 nhân viên sales.', type: 'order', timestamp: '1 ngày trước', read: true },
+  ],
+  sales: [
+    { id: 'notif-s-1', title: '📊 Báo Cáo AI Sales Brief (18:00)', message: 'Báo cáo tổng hợp doanh số và 4 công việc ưu tiên ngày 18/07 đã sẵn sàng.', type: 'ai_summary', timestamp: 'Mới nhất', read: false },
+    { id: 'notif-s-2', title: '🎯 KPI Cá Nhân Đạt 78%', message: 'Nguyễn Văn An vừa đạt 78% chỉ tiêu doanh số cá nhân tháng 7/2026!', type: 'kpi', timestamp: '10 phút trước', read: false },
+    { id: 'notif-s-3', title: '👤 Khách Hàng VIP Mới', message: 'Khách hàng Phạm Minh Tuấn (VIP) được gán cho bạn trực tiếp chăm sóc.', type: 'customer', timestamp: '1 giờ trước', read: false },
+    { id: 'notif-s-4', title: '💰 Đơn Hàng Mới #ORD-2088', message: 'Đơn hàng 185,000,000đ đã được thanh toán cọc thành công.', type: 'order', timestamp: '3 giờ trước', read: true },
+  ],
+};
+
+export const INITIAL_NOTIFICATIONS: NotificationItem[] = ROLE_NOTIFICATIONS.sales;
 
 export const MOCK_TIMELINE_EVENTS: CustomerTimelineEvent[] = [
   { id: 'evt-1', date: '2026-07-01 09:30', title: 'Lead Created', description: 'Khách hàng để lại thông tin từ Facebook Ads Jemmia Diamond', salesOwner: 'Nguyễn Văn An', type: 'lead' },

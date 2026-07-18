@@ -10,9 +10,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select } from '@/components/ui/select';
 import { Dialog } from '@/components/ui/dialog';
-import { Badge } from '@/components/ui/badge';
 import { Plus, Edit3, Trash2, UserCheck } from 'lucide-react';
-import { formatVND } from '@/lib/utils';
+import { formatFullVND } from '@/lib/utils';
 
 export default function SalesManagementPage() {
   const queryClient = useQueryClient();
@@ -75,7 +74,7 @@ export default function SalesManagementPage() {
     setName(s.name);
     setEmail(s.email);
     setPhone(s.phone);
-    setDepartment(s.department);
+    setDepartment(s.department || 'VIP Consultation');
     setKpiTarget(s.kpiTarget);
     setCommissionRate(s.commissionRate || 4);
     setIsModalOpen(true);
@@ -108,18 +107,26 @@ export default function SalesManagementPage() {
       ),
     },
     {
-      accessorKey: 'department',
-      header: 'Phòng Ban',
-      cell: ({ row }) => <Badge variant="secondary">{row.original.department}</Badge>,
-    },
-    {
       accessorKey: 'phone',
       header: 'Số Điện Thoại',
     },
     {
       accessorKey: 'revenue',
-      header: 'Doanh Số',
-      cell: ({ row }) => <span className="font-bold text-emerald-500">{formatVND(row.original.revenue)}</span>,
+      header: () => <div className="text-right">Doanh Số</div>,
+      cell: ({ row }) => (
+        <div className="text-right font-bold text-emerald-600 dark:text-emerald-400">
+          {formatFullVND(row.original.revenue)}
+        </div>
+      ),
+    },
+    {
+      accessorKey: 'kpiTarget',
+      header: () => <div className="text-right">Chỉ Tiêu KPI</div>,
+      cell: ({ row }) => (
+        <div className="text-right font-semibold text-slate-700 dark:text-slate-300">
+          {formatFullVND(row.original.kpiTarget)}
+        </div>
+      ),
     },
     {
       accessorKey: 'kpiAchieved',
@@ -139,8 +146,12 @@ export default function SalesManagementPage() {
     },
     {
       accessorKey: 'commission',
-      header: 'Hoa Hồng Trả',
-      cell: ({ row }) => <span className="font-semibold">{formatVND(row.original.commission)}</span>,
+      header: () => <div className="text-right">Hoa Hồng Trả</div>,
+      cell: ({ row }) => (
+        <div className="text-right font-semibold text-indigo-500 dark:text-indigo-400">
+          {formatFullVND(row.original.commission)}
+        </div>
+      ),
     },
     {
       id: 'actions',
@@ -168,21 +179,17 @@ export default function SalesManagementPage() {
 
   return (
     <div className="space-y-6 animate-in fade-in duration-200">
+      {/* Page Title (No Subtitle) */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-            <UserCheck className="h-6 w-6 text-blue-500" /> Quản Lý Đội Ngũ Sales
-          </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-            Quản lý tài khoản nhân viên bán hàng & Cấu hình tỷ lệ % hoa hồng được cấp
-          </p>
-        </div>
+        <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+          <UserCheck className="h-6 w-6 text-blue-500" /> Sales
+        </h1>
         <Button variant="gradient" onClick={handleOpenCreate} className="flex items-center gap-1.5">
           <Plus className="h-4 w-4" /> Thêm Nhân Viên Sales
         </Button>
       </div>
 
-      <GenericDataTable columns={columns} data={sales} isLoading={isLoading} searchPlaceholder="Tìm tên sale, phòng ban, SĐT..." />
+      <GenericDataTable columns={columns} data={sales} isLoading={isLoading} searchPlaceholder="Tìm tên sale, SĐT..." />
 
       <Dialog
         isOpen={isModalOpen}

@@ -17,13 +17,14 @@ export default function SettingsPage() {
   const [phone, setPhone] = useState(user?.phone || '0912 345 678');
   const [savedSuccess, setSavedSuccess] = useState(false);
 
-  // Dynamically fetch sales rep account data configured by Company Admin
+  // Dynamically fetch sales rep account data if role is sales
   const { data: salesAccount } = useQuery({
     queryKey: ['salesAccountProfile', user?.email],
     queryFn: async () => {
       const allSales = await SalesService.getAllSales();
       return allSales.find((s) => s.email === user?.email || s.id === 'sales-1') || allSales[0];
     },
+    enabled: role === 'sales',
   });
 
   const displayCommissionRate = `${salesAccount?.commissionRate ?? 4}%`;
@@ -83,22 +84,24 @@ export default function SettingsPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className={`grid grid-cols-1 ${role === 'sales' ? 'sm:grid-cols-2' : ''} gap-4`}>
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold">Số Điện Thoại Liên Hệ</label>
                 <Input value={phone} onChange={(e) => setPhone(e.target.value)} required />
               </div>
-              <div className="space-y-1.5">
-                <label className="text-xs font-semibold flex items-center gap-1">
-                  <Percent className="h-3.5 w-3.5 text-amber-500" /> % Hoa Hồng (Read-only)
-                </label>
-                <Input
-                  value={displayCommissionRate}
-                  disabled
-                  readOnly
-                  className="bg-slate-100 dark:bg-slate-800/80 font-bold text-amber-600 dark:text-amber-400 cursor-not-allowed border-amber-500/20"
-                />
-              </div>
+              {role === 'sales' && (
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold flex items-center gap-1">
+                    <Percent className="h-3.5 w-3.5 text-amber-500" /> % Hoa Hồng
+                  </label>
+                  <Input
+                    value={displayCommissionRate}
+                    disabled
+                    readOnly
+                    className="bg-slate-100 dark:bg-slate-800/80 font-bold text-amber-600 dark:text-amber-400 cursor-not-allowed border-amber-500/20"
+                  />
+                </div>
+              )}
             </div>
 
             <div className="flex justify-end pt-2">

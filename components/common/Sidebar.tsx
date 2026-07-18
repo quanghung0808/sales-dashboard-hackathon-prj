@@ -65,7 +65,7 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
       roles: ['company_admin'],
     },
     {
-      label: 'Đội Ngũ Sales',
+      label: 'Sales',
       href: '/admin/sales',
       icon: UserCheck,
       roles: ['company_admin'],
@@ -74,13 +74,13 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
       label: 'Chỉ Tiêu KPI',
       href: '/admin/kpi',
       icon: Target,
-      roles: ['company_admin'],
+      roles: ['super_admin'],
     },
     {
       label: 'Cấu Hình Hoa Hồng',
       href: '/admin/commission',
       icon: Award,
-      roles: ['company_admin'],
+      roles: ['super_admin'],
     },
     {
       label: 'Cấu Hình AI',
@@ -115,7 +115,7 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
       roles: ['sales'],
     },
 
-    // API Integration & Multi-Tenant Features (Admin / Super Admin only)
+    // API Integration & Multi-Tenant Features
     {
       label: 'API Access Keys',
       href: '/settings/api-keys',
@@ -126,19 +126,19 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
       label: 'Tài Liệu REST API',
       href: '/settings/api-docs',
       icon: BookOpen,
-      roles: ['super_admin', 'company_admin'],
+      roles: ['super_admin'],
     },
     {
       label: 'Webhooks Event',
       href: '/settings/webhooks',
       icon: Radio,
-      roles: ['super_admin', 'company_admin'],
+      roles: ['super_admin'],
     },
     {
       label: 'API Usage Analytics',
       href: '/settings/api-usage',
       icon: Activity,
-      roles: ['super_admin', 'company_admin'],
+      roles: ['super_admin'],
     },
 
     // Shared Profile

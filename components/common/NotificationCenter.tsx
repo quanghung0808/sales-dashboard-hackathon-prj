@@ -1,18 +1,31 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useNotificationStore } from '@/hooks/useNotificationStore';
-import { Bell, CheckCheck, Sparkles, Target, User, ShoppingBag } from 'lucide-react';
+import { useAuthStore } from '@/hooks/useAuthStore';
+import { ROLE_NOTIFICATIONS } from '@/services/mock/mockData';
+import { Bell, CheckCheck, Sparkles, Target, User, ShoppingBag, ShieldCheck, Activity } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { DailyAISummaryModal } from '@/features/sales/DailyAISummaryModal';
+import { NotificationItem } from '@/types';
 
 interface NotificationCenterProps {
   onClose: () => void;
 }
 
 export function NotificationCenter({ onClose }: NotificationCenterProps) {
-  const { notifications, markAsRead, markAllAsRead } = useNotificationStore();
+  const { role } = useAuthStore();
   const [isDailyReportOpen, setIsDailyReportOpen] = useState(false);
+
+  const initialItems = ROLE_NOTIFICATIONS[role] || ROLE_NOTIFICATIONS.sales;
+  const [items, setItems] = useState<NotificationItem[]>(initialItems);
+
+  const markAsRead = (id: string) => {
+    setItems((prev) => prev.map((n) => (n.id === id ? { ...n, read: true } : n)));
+  };
+
+  const markAllAsRead = () => {
+    setItems((prev) => prev.map((n) => ({ ...n, read: true })));
+  };
 
   const getNotifIcon = (type: string) => {
     switch (type) {
@@ -29,9 +42,9 @@ export function NotificationCenter({ onClose }: NotificationCenterProps) {
     }
   };
 
-  const handleNotificationClick = (notif: any) => {
+  const handleNotificationClick = (notif: NotificationItem) => {
     markAsRead(notif.id);
-    if (notif.type === 'ai_summary') {
+    if (notif.type === 'ai_summary' && role === 'sales') {
       setIsDailyReportOpen(true);
     }
   };
@@ -41,7 +54,8 @@ export function NotificationCenter({ onClose }: NotificationCenterProps) {
       <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl dark:border-slate-800 dark:bg-slate-900 z-50 animate-in fade-in duration-150">
         <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
           <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-slate-100">
-            <Bell className="h-4 w-4 text-blue-500" /> Thông Báo Hệ Thống
+            <Bell className="h-4 w-4 text-blue-500" />
+            <span>Thông Báo {role === 'super_admin' ? 'Super Admin' : role === 'company_admin' ? 'Company Admin' : 'Sales Workspace'}</span>
           </div>
           <Button variant="ghost" size="sm" onClick={markAllAsRead} className="h-7 text-xs flex items-center gap-1 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200">
             <CheckCheck className="h-3.5 w-3.5" /> Đọc tất cả
@@ -49,10 +63,10 @@ export function NotificationCenter({ onClose }: NotificationCenterProps) {
         </div>
 
         <div className="mt-3 max-h-80 overflow-y-auto space-y-2">
-          {notifications.length === 0 ? (
+          {items.length === 0 ? (
             <div className="py-8 text-center text-xs text-slate-400">Không có thông báo mới</div>
           ) : (
-            notifications.map((notif) => (
+            items.map((notif) => (
               <div
                 key={notif.id}
                 onClick={() => handleNotificationClick(notif)}
@@ -78,7 +92,9 @@ export function NotificationCenter({ onClose }: NotificationCenterProps) {
         </div>
       </div>
 
-      <DailyAISummaryModal isOpen={isDailyReportOpen} onClose={() => setIsDailyReportOpen(false)} />
+      {role === 'sales' && (
+        <DailyAISummaryModal isOpen={isDailyReportOpen} onClose={() => setIsDailyReportOpen(false)} />
+      )}
     </>
   );
 }
