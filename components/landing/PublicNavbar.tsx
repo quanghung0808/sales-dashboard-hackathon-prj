@@ -32,7 +32,7 @@ export function PublicNavbar() {
           </div>
           <div className="flex flex-col">
             <span className="text-base font-bold bg-gradient-to-r from-blue-600 via-indigo-500 to-rose-500 bg-clip-text text-transparent">
-              AI Sales CRM
+              Sales Pilot
             </span>
             <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Nền tảng SaaS</span>
           </div>

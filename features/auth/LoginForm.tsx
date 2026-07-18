@@ -46,7 +46,7 @@ export function LoginForm() {
           AI
         </div>
         <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-blue-600 via-indigo-500 to-rose-500 bg-clip-text text-transparent">
-          AI Sales CRM
+          AI Sales Pilot
         </h1>
         <p className="text-xs text-slate-400">
           Nền tảng Quản trị & Trợ lý Bán hàng Thông minh

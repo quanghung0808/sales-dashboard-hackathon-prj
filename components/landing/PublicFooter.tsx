@@ -15,7 +15,7 @@ export function PublicFooter() {
               <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-black text-lg">
                 AI
               </div>
-              <span className="text-base font-bold text-slate-900 dark:text-white">AI Sales CRM</span>
+              <span className="text-base font-bold text-slate-900 dark:text-white">Sales Pilot</span>
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               Nền tảng Quản trị Bán hàng & Trợ lý AI tích hợp chuẩn REST API Multi-Tenant cho doanh nghiệp hiện đại.
